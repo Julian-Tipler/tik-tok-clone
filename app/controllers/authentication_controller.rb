@@ -1,4 +1,6 @@
 class AuthenticationController < ApplicationController
+  skip_before_action :authenticate_request, only: [:login]
+
   def login
     @user = User.find_by_email(params[:email])
 
@@ -11,11 +13,15 @@ class AuthenticationController < ApplicationController
     end
   end
 
+  def logout
+    @user = User.find_by_email(params[:email])
+  end
+
   private
 
   def jwt_encode(payload, exp = 24.hours.from_now)
     puts payload
     payload[:exp] = exp.to_i
-    JWT.encode(payload, Rails.application.secrets.secret_key_base)
+    JWT.encode(payload, Rails.application.credentials.secret_key_base)
   end
 end
