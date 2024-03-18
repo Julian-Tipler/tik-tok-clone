@@ -1,9 +1,8 @@
 class AuthenticationController < ApplicationController
-  skip_before_action :verify_authenticity_token
-
   def login
     @user = User.find_by_email(params[:email])
 
+    # Returns a boolean if the password matches the password_hash
     if @user&.authenticate(params[:password])
       token = jwt_encode(user_id: @user.id)
       render json: { token:, user_id: @user.id }, status: :ok
