@@ -14,7 +14,7 @@ class AuthenticationController < ApplicationController
   end
 
   def logout
-    @user = User.find_by_email(params[:email])
+    render json: { message: 'Logged out successfully.' }, status: :ok
   end
 
   private
