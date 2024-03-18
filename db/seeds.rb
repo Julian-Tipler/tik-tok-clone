@@ -7,6 +7,10 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+Like.destroy_all
+Comment.destroy_all
+Video.destroy_all
+User.destroy_all
 
 10.times do
   User.create!(
@@ -19,6 +23,16 @@
     )
   )
 end
+
+User.create!(
+  username: 'tiplerj',
+  email: 'tipler.julian@gmail.com',
+  password: 'password123',
+  bio: "I'm Julian",
+  profile_picture_url: Faker::Avatar.image(
+    slug: 'https://ui-avatars.com/api/?name=julian+tipler', size: '50x50'
+  )
+)
 
 User.all.each do |user|
   5.times do
@@ -45,10 +59,16 @@ likeable_types = %w[Video Comment]
 
 200.times do
   likeable_type = likeable_types.sample
+  likeable = likeable_type.constantize.order('RANDOM()').first
+  user = User.order('RANDOM()').first
+
+  # Attempt to find an existing like first to avoid violating the unique constraint
+  next if Like.exists?(likeable_type:, likeable_id: likeable.id, user_id: user.id)
+
   Like.create!(
     likeable_type:,
-    likeable_id: likeable_type.constantize.order('RANDOM()').first.id,
-    user: User.order('RANDOM()').first
+    likeable_id: likeable.id,
+    user:
   )
 end
 
