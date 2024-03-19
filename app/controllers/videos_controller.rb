@@ -1,9 +1,9 @@
 class VideosController < ApplicationController
-  before_action :set_video, only: %i[ show update destroy ]
+  before_action :set_video, only: %i[show update destroy]
 
   # GET /videos
   def index
-    @videos = Video.all
+    @videos = Video.where.not(user_id: @current_user.id)
 
     render json: @videos
   end
@@ -39,13 +39,14 @@ class VideosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_video
-      @video = Video.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def video_params
-      params.require(:video).permit(:user_id, :title, :description, :video_url, :thumbnail_url, :view_count)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_video
+    @video = Video.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def video_params
+    params.require(:video).permit(:user_id, :title, :description, :video_url, :thumbnail_url, :view_count)
+  end
 end

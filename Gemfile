@@ -39,6 +39,8 @@ gem 'bootsnap', require: false
 
 gem 'solargraph'
 
+gem 'rack-cors'
+
 group :development, :test do
   gem 'rubocop', require: false
 

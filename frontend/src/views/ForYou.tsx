@@ -1,9 +1,11 @@
+import { useEffect } from "react";
+import { fetchForYouVideos } from "../api/fetchForYouVideos";
+
 export const ForYou = () => {
+  useEffect(() => {
+    fetchForYouVideos();
+  });
   return (
-    <div className="align-center flex flex-1 flex-col justify-center">
-      {[1, 2, 3, 4].map((video) => {
-        return <div>Video {video}</div>;
-      })}
-    </div>
+    <div className="align-center flex flex-1 flex-col justify-center"></div>
   );
 };

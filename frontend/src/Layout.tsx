@@ -4,14 +4,16 @@ import { NavBar } from "./views/NavBar";
 
 export const Layout = () => {
   return (
-    <div className="mx-auto px-4">
-      <Header />
-      <body className="flex">
-        <NavBar />
-        <div id="outlet-container" className="flex-1">
-          <Outlet />
+    <>
+      <div className="mx-auto px-4">
+        <Header />
+        <div className="flex">
+          <NavBar />
+          <div id="outlet-container" className="flex-1">
+            <Outlet />
+          </div>
         </div>
-      </body>
-    </div>
+      </div>
+    </>
   );
 };

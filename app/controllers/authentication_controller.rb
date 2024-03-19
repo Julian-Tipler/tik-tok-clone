@@ -3,6 +3,7 @@ class AuthenticationController < ApplicationController
 
   def login
     @user = User.find_by_email(params[:email])
+    puts(params[:password])
 
     # Returns a boolean if the password matches the password_hash
     if @user&.authenticate(params[:password])
