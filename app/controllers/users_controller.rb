@@ -2,11 +2,13 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show update destroy]
 
   def me
-    if @current_user
-      render json: @current_user
-    else
-      render json: { error: 'Not Authorized' }, status: :unauthorized
-    end
+    render json: @current_user
+  end
+
+  def following
+    following = @current_user.following
+    puts following
+    render json: following
   end
 
   def create

@@ -20,7 +20,7 @@ const router = createBrowserRouter([
         element: <Following />,
       },
       {
-        path: "/profile",
+        path: "/explore",
         element: <Explore />,
       },
       {
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
         element: <Live />,
       },
       {
-        path: "/profile",
+        path: "/profile/:id",
         element: <Profile />,
       },
       {

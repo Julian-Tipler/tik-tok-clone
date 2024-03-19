@@ -24,7 +24,7 @@ User.destroy_all
   )
 end
 
-User.create!(
+special_user = User.create!(
   username: 'tiplerj',
   email: 'tipler.julian@gmail.com',
   password: 'password123',
@@ -33,6 +33,9 @@ User.create!(
     slug: 'https://ui-avatars.com/api/?name=julian+tipler', size: '50x50'
   )
 )
+
+users_to_follow = User.where.not(id: special_user.id).limit(5)
+special_user.following << users_to_follow
 
 User.all.each do |user|
   5.times do
