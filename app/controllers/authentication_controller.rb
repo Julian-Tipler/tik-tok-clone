@@ -8,7 +8,7 @@ class AuthenticationController < ApplicationController
     # Returns a boolean if the password matches the password_hash
     if @user&.authenticate(params[:password])
       token = jwt_encode(user_id: @user.id)
-      render json: { token:, user_id: @user.id }, status: :ok
+      render json: { token: }, status: :ok
     else
       render json: { error: 'unauthorized' }, status: :unauthorized
     end

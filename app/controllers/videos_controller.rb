@@ -1,10 +1,9 @@
 class VideosController < ApplicationController
   before_action :set_video, only: %i[show update destroy]
 
-  # GET /videos
+  # GET foryou /videos
   def index
     @videos = Video.where.not(user_id: @current_user.id)
-
     render json: @videos
   end
 

@@ -1,6 +1,6 @@
 export const NavBar = () => {
   return (
-    <>
+    <nav className="p-6">
       <div className=" flex w-10 flex-col lg:hidden">
         <div>FY</div>
         <div>FL</div>
@@ -17,6 +17,6 @@ export const NavBar = () => {
         <div>LIVE</div>
         <div>Profile</div>
       </div>
-    </>
+    </nav>
   );
 };

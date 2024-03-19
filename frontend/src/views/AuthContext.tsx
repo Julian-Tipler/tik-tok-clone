@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { fetchWithAuth } from "../api/helpers/fetchWithAuth";
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
@@ -14,6 +15,8 @@ type AuthContextType = {
   user: User | null;
   setUser: (user: User) => void;
   login: (email: string, password: string) => void;
+  logout: () => void;
+  loadingAuth: boolean;
 };
 
 export function useAuth() {
@@ -22,6 +25,30 @@ export function useAuth() {
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [loadingAuth, setLoadingAuth] = useState<boolean>(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      setLoadingAuth(false);
+    }
+
+    const fetchUser = async () => {
+      setLoadingAuth(true);
+      try {
+        const url = import.meta.env.VITE_API_URL + "/me";
+        const user = await fetchWithAuth(url);
+        setUser(user);
+      } catch (error) {
+        console.error(error);
+        setUser(null);
+        localStorage.removeItem("authToken");
+      } finally {
+        setLoadingAuth(false);
+      }
+    };
+    fetchUser();
+  }, []);
 
   const login = async (email: string, password: string) => {
     const url = import.meta.env.VITE_API_URL + "/login";
@@ -32,12 +59,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       },
       body: JSON.stringify({ email, password }),
     });
-    const data = await response.json();
-    setUser(data);
+    const { token } = await response.json();
+    localStorage.setItem("authToken", token);
+    window.location.reload();
+  };
+
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("authToken");
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, login }}>
+    <AuthContext.Provider value={{ user, setUser, login, logout, loadingAuth }}>
       {children}
     </AuthContext.Provider>
   );
