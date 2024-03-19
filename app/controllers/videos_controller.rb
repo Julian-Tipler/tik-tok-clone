@@ -1,9 +1,10 @@
 class VideosController < ApplicationController
   before_action :set_video, only: %i[show update destroy]
+  skip_before_action :authenticate_request, only: %i[index show]
 
   # GET foryou /videos
   def index
-    @videos = Video.where.not(user_id: @current_user.id)
+    @videos = @current_user ? @current_user.where.not(user_id: @current_user.id) : Video.all
     render json: @videos
   end
 
