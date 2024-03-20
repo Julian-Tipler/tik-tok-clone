@@ -10,11 +10,11 @@ export const Header = () => {
       <div className="text-2xl font-bold">TikTok</div>
       <div>Search</div>
       <div className="flex space-x-4">
-        <div>Upload</div>
+        <button>Upload</button>
         {user ? (
-          <div onClick={logout}>{user.username}</div>
+          <button onClick={logout}>{user.username}</button>
         ) : (
-          <div onClick={() => showModal(<Login />)}>Login</div>
+          <button onClick={() => showModal(<Login />)}>Login</button>
         )}
       </div>
     </header>
