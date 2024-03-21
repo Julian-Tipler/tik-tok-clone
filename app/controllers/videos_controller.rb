@@ -5,7 +5,7 @@ class VideosController < ApplicationController
   # GET foryou /videos
   def index
     if current_user
-      videos = Video.where.not(user: current_user)
+      videos = Video.videos_for_user(current_user)
       render json: videos, scope: current_user
     else
       videos = Video.all
@@ -21,7 +21,6 @@ class VideosController < ApplicationController
   # POST /videos
   def create
     @video = Video.new(video_params)
-
     if @video.save
       render json: @video, status: :created, location: @video
     else

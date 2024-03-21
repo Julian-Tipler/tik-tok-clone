@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'following', to: 'users#following'
 
   resources :videos do
+    # get '/page/:page', action: :index, on: :collection
     member do
       post 'like', to: 'videos#like'
     end
