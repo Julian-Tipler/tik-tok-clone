@@ -38,7 +38,7 @@ users_to_follow = User.where.not(id: special_user.id).limit(5)
 special_user.following << users_to_follow
 
 User.all.each do |user|
-  5.times do
+  2.times do
     user.videos.create!(
       title: Faker::Movie.title,
       description: Faker::Lorem.sentence(word_count: 10),

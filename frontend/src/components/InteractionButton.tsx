@@ -17,8 +17,10 @@ export const InteractionButton = ({
   disabled,
 }: {
   symbol: ButtonSymbol;
-  action: () => void;
+  action: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
   disabled: boolean;
 }) => {
-  return <button onClick={action}>{symbolDictionary[symbol]}</button>;
+  const maybeAction = disabled ? () => null : action;
+  console.log(maybeAction);
+  return <button onClick={maybeAction}>{symbolDictionary[symbol]}</button>;
 };

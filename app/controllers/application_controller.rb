@@ -1,16 +1,29 @@
 class ApplicationController < ActionController::API
   before_action :authenticate_request
 
+  def current_user
+    return @current_user if defined?(@current_user)
+
+    header = request.headers['Authorization']
+    return nil if header.blank?
+
+    header = header.split(' ').last
+    begin
+      decoded = jwt_decode(header)
+      @current_user = User.find(decoded[:user_id])
+    rescue JWT::DecodeError => e
+      nil
+    end
+  end
+
   private
 
   def authenticate_request
-    puts '******     application_controller    ******    '
     header = request.headers['Authorization']
     header = header.split(' ').last if header
     begin
       decoded = jwt_decode(header)
       @current_user = User.find(decoded[:user_id])
-      puts @current_user
     rescue JWT::DecodeError => e
       render json: { errors: e.message }, status: :unauthorized
     end

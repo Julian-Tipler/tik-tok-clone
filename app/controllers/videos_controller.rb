@@ -4,10 +4,13 @@ class VideosController < ApplicationController
 
   # GET foryou /videos
   def index
-    videos = @current_user ? Video.includes(:likes).where.not(user_id: @current_user.id) : Video.includes(:likes).all
-    puts 'hello'
-    puts @current_user
-    render json: videos, scope: @current_user
+    if current_user
+      videos = Video.where.not(user: current_user)
+      render json: videos, scope: current_user
+    else
+      videos = Video.all
+      render json: videos
+    end
   end
 
   # GET /videos/1
@@ -37,7 +40,12 @@ class VideosController < ApplicationController
 
   # POST /videos/1/like
   def like
-    @video.likes.create!(user_id: @current_user.id)
+    if @video.likes.exists?(user_id: @current_user.id)
+      @video.like_by(@current_user)
+    else
+      @video.unlike_by(@current_user)
+    end
+    render json: @video.like_count
   end
 
   # DELETE /videos/1
