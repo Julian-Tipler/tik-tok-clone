@@ -4,15 +4,16 @@ class Video < ApplicationRecord
 
   has_many :likes, as: :likeable, dependent: :destroy
 
-  def like_by(user)
-    likes.create!(user_id: user.id) unless likes.where(user_id: user.id)
+  def toggle_like_by(user)
+    like = likes.find_by(user_id: user.id)
+    if like
+      like.destroy
+    else
+      likes.create!(user_id: user.id)
+    end
   end
 
   def like_count
     likes.count
-  end
-
-  def unlike_by(user)
-    likes.destroy!(user_id: user.id)
   end
 end

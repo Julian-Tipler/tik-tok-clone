@@ -42,7 +42,7 @@ export const ForYou = () => {
     <div className="flex flex-1 flex-col items-center justify-center">
       <div className="w-128">
         {videos.map((video) => {
-          return <Video video={video} />;
+          return <Video video={video} setVideos={setVideos} />;
         })}
       </div>
     </div>

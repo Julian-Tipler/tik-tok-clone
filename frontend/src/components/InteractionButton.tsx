@@ -21,6 +21,5 @@ export const InteractionButton = ({
   disabled: boolean;
 }) => {
   const maybeAction = disabled ? () => null : action;
-  console.log(maybeAction);
   return <button onClick={maybeAction}>{symbolDictionary[symbol]}</button>;
 };

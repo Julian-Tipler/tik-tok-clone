@@ -40,12 +40,8 @@ class VideosController < ApplicationController
 
   # POST /videos/1/like
   def like
-    if @video.likes.exists?(user_id: @current_user.id)
-      @video.like_by(@current_user)
-    else
-      @video.unlike_by(@current_user)
-    end
-    render json: @video.like_count
+    @video.toggle_like_by(@current_user)
+    render json: @video
   end
 
   # DELETE /videos/1
