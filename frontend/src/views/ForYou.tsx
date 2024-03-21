@@ -24,6 +24,7 @@ export type Video = {
   likes: Like;
   likes_count: number;
   comments_count: number;
+  user_like?: boolean;
 };
 
 export const ForYou = () => {

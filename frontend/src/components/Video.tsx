@@ -21,10 +21,13 @@ export const Video = ({
     setVideos((prevVideos) =>
       prevVideos.map((v) => {
         if (v.id === video.id) {
-          // Replace with the updated video data
-          return { ...v, likes_count: updatedVideo.likes_count };
+          return {
+            ...v,
+            likes_count: updatedVideo.likes_count,
+            user_like: updatedVideo.user_like,
+          };
         }
-        return v; // Return unchanged for other videos
+        return v;
       }),
     );
   };
@@ -44,6 +47,7 @@ export const Video = ({
               symbol={"like"}
               action={handleLike}
               disabled={disabled}
+              highlighted={!!video.user_like}
             />
             <div>{video.likes_count}</div>
           </div>
