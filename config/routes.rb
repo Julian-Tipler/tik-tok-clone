@@ -8,6 +8,13 @@ Rails.application.routes.draw do
   get 'me', to: 'users#me'
   get 'following', to: 'users#following'
 
+  resources :videos do
+    member do
+      post 'like', to: 'videos#like'
+    end
+  end
+  # Other routes...
+
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get 'up' => 'rails/health#show', as: :rails_health_check

@@ -2,16 +2,28 @@ import { useEffect, useState } from "react";
 import { fetchWithAuth } from "../api/helpers/fetchWithAuth";
 import { Video } from "../components/Video";
 
+export type Like = {
+  id: number;
+  likeable_type: string;
+  likeable_id: number;
+  user_id: number;
+  created_at: string;
+  updated_at: string;
+};
+
 export type Video = {
+  id: number;
   created_at: string;
   description: string;
-  id: number;
   thumbnail_url: string;
   title: string;
   updated_at: string;
   user_id: number;
   video_url: string;
   view_count: number;
+  likes: Like;
+  likes_count: number;
+  comments_count: number;
 };
 
 export const ForYou = () => {

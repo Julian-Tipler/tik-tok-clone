@@ -56,6 +56,12 @@ Video.all.each do |video|
       content: Faker::Lorem.sentence(word_count: 5)
     )
   end
+  users = User.order('RANDOM()').limit(5)
+  users.each do |user|
+    video.likes.create!(
+      user_id: user.id
+    )
+  end
 end
 
 likeable_types = %w[Video Comment]

@@ -41,6 +41,8 @@ gem 'solargraph'
 
 gem 'rack-cors'
 
+gem 'active_model_serializers'
+
 group :development, :test do
   gem 'rubocop', require: false
 

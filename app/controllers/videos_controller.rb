@@ -1,11 +1,13 @@
 class VideosController < ApplicationController
-  before_action :set_video, only: %i[show update destroy]
+  before_action :set_video, only: %i[show update destroy like]
   skip_before_action :authenticate_request, only: %i[index show]
 
   # GET foryou /videos
   def index
-    @videos = @current_user ? @current_user.where.not(user_id: @current_user.id) : Video.all
-    render json: @videos
+    videos = @current_user ? Video.includes(:likes).where.not(user_id: @current_user.id) : Video.includes(:likes).all
+    puts 'hello'
+    puts @current_user
+    render json: videos, scope: @current_user
   end
 
   # GET /videos/1
@@ -31,6 +33,11 @@ class VideosController < ApplicationController
     else
       render json: @video.errors, status: :unprocessable_entity
     end
+  end
+
+  # POST /videos/1/like
+  def like
+    @video.likes.create!(user_id: @current_user.id)
   end
 
   # DELETE /videos/1

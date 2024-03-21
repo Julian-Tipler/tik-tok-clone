@@ -11,6 +11,14 @@ const symbolDictionary: SymbolDictionary = {
   share: "📤",
 };
 
-export const InteractionButton = ({ symbol }: { symbol: ButtonSymbol }) => {
-  return <button>{symbolDictionary[symbol]}</button>;
+export const InteractionButton = ({
+  symbol,
+  action,
+  disabled,
+}: {
+  symbol: ButtonSymbol;
+  action: () => void;
+  disabled: boolean;
+}) => {
+  return <button onClick={action}>{symbolDictionary[symbol]}</button>;
 };
