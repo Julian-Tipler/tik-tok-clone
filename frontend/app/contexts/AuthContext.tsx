@@ -1,3 +1,5 @@
+"use client";
+
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { fetchWithAuth } from "../api/helpers/fetchWithAuth";
 
@@ -37,7 +39,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const fetchUser = async () => {
       setLoadingAuth(true);
       try {
-        const url = process.env.API_URL + "/me";
+        const url = process.env.NEXT_PUBLIC_API_URL + "/me";
         const user = await fetchWithAuth(url);
         setUser(user);
       } catch (error) {
@@ -52,7 +54,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const url = process.env.VITE_API_URL + "/login";
+    const url = process.env.NEXT_PUBLIC_API_URL + "/login";
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -60,7 +62,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       },
       body: JSON.stringify({ email, password }),
     });
-    const { token } = await response.json();
+    const { token, error } = await response.json();
+    if (error) {
+      console.error(error);
+      return;
+    }
     localStorage.setItem("authToken", token);
     window.location.reload();
   };

@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show update destroy]
 
   def me
+    puts "here"
     render json: @current_user
   end
 

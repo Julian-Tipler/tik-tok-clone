@@ -4,7 +4,6 @@ import Link from "next/link";
 const commonNavProperties = "flex flex-col text-lg font-semibold";
 
 export const NavBar = () => {
-  const { user } = useAuth();
   const navItems = [
     {
       name: "For You",
@@ -31,11 +30,11 @@ export const NavBar = () => {
       shortened: "LVE",
       link: "/live",
     },
-    {
-      name: "Profile",
-      shortened: "PRF",
-      link: `/profile${user ? "/" + user.id : ""}`,
-    },
+    // {
+    //   name: "Profile",
+    //   shortened: "PRF",
+    //   link: `/profile${user ? "/" + user.id : ""}`,
+    // },
   ];
   return (
     <nav className="p-6">

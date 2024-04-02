@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+"use client";
+
+import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useModal } from "../contexts/ModalContext";
 
@@ -9,11 +11,9 @@ export const Login = () => {
   const { user, login } = useAuth();
   const { hideModal } = useModal();
 
-  useEffect(() => {
-    if (user) {
-      hideModal();
-    }
-  }, [user, hideModal]);
+  if (user) {
+    hideModal();
+  }
 
   return (
     <div className="p-8">
