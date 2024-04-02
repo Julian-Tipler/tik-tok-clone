@@ -1,16 +1,23 @@
-import React from "react";
-import { InteractionButton } from "./InteractionButton";
-import { Video } from "../(dashboard)/foryou/page";
-import { likeVideo } from "../api/likeVideo";
+"use client";
 
-export const VideoModal = ({ video }: { video: Video }) => {
+import React, { useState } from "react";
+import { InteractionButton } from "./InteractionButton";
+import { likeVideo } from "../api/likeVideo";
+import { useAuth } from "../contexts/AuthContext";
+import { useVideos } from "../contexts/VideosContext";
+
+export const VideoModal = ({ videoId }: { videoId: number }) => {
+  const { videos, setVideos } = useVideos();
+  const { user } = useAuth();
+  const disabled = !user;
+
   const handleLike = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const updatedVideo = await likeVideo(video.id);
+    const updatedVideo = await likeVideo(videoId);
     setVideos((prevVideos) =>
       prevVideos.map((v) => {
-        if (v.id === video.id) {
+        if (v.id === videoId) {
           return {
             ...v,
             likes_count: updatedVideo.likes_count,
@@ -21,6 +28,13 @@ export const VideoModal = ({ video }: { video: Video }) => {
       })
     );
   };
+
+  const handleComment = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+  };
+
+  const video = videos.find((v) => v.id === videoId);
+  if (!video) return null;
   return (
     <div key={video.id} className="flex w-96 flex-col p-4">
       {/* title */}
@@ -44,7 +58,7 @@ export const VideoModal = ({ video }: { video: Video }) => {
           <div className="flex flex-col items-center">
             <InteractionButton
               symbol={"message"}
-              disabled={disabled}
+              // disabled={disabled}
               action={handleComment}
             />
             <div>{video.comments_count}</div>
@@ -52,7 +66,7 @@ export const VideoModal = ({ video }: { video: Video }) => {
           <div className="flex flex-col items-center">
             <InteractionButton
               symbol={"save"}
-              disabled={disabled}
+              // disabled={disabled}
               action={async () => console.log("comment")}
             />
             <div>3</div>
@@ -60,7 +74,7 @@ export const VideoModal = ({ video }: { video: Video }) => {
           <div className="flex flex-col items-center">
             <InteractionButton
               symbol={"share"}
-              disabled={disabled}
+              // disabled={disabled}
               action={async () => console.log("comment")}
             />
             <div>4</div>

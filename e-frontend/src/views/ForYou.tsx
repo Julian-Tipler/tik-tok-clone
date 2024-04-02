@@ -28,15 +28,7 @@ export type Video = {
 };
 
 export const ForYou = () => {
-  const [videos, setVideos] = useState<Video[]>([]);
-  useEffect(() => {
-    const fetchForYouVideos = async () => {
-      const url = import.meta.env.VITE_API_URL + "/videos";
-      const videos: Video[] = await fetchWithAuth(url);
-      setVideos(videos);
-    };
-    fetchForYouVideos();
-  }, []);
+  const { videos, setVideos } = useState<Video[]>([]);
   if (!videos.length)
     return <div className="flex items-center justify-center">Loading...</div>;
   return (

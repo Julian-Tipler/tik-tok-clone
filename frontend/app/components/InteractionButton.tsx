@@ -14,12 +14,12 @@ const symbolDictionary: SymbolDictionary = {
 export const InteractionButton = ({
   symbol,
   action,
-  disabled,
+  disabled = false,
   highlighted = false,
 }: {
   symbol: ButtonSymbol;
   action: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
-  disabled: boolean;
+  disabled?: boolean;
   highlighted?: boolean;
 }) => {
   const maybeAction = disabled ? () => null : action;

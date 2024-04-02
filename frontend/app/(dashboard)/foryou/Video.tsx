@@ -1,6 +1,5 @@
-import { fetchWithAuth } from "../../api/helpers/fetchWithAuth";
 import { useAuth } from "../../contexts/AuthContext";
-import { Video as VideoType } from "./page";
+import { Video as VideoType } from "../../contexts/VideosContext";
 import { useModal } from "../../contexts/ModalContext";
 import { InteractionButton } from "../../components/InteractionButton";
 import { VideoModal } from "../../components/VideoModal";
@@ -34,10 +33,13 @@ export const Video = ({
       })
     );
   };
+  if (video.id === 23) {
+    console.log(video);
+  }
 
   const handleComment = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    showModal(<VideoModal video={video} />);
+    showModal(<VideoModal videoId={video.id} />);
   };
   return (
     <div key={video.id} className="flex w-96 flex-col p-4">
